@@ -2,8 +2,13 @@ namespace SistemaAdopcion.Mobile.Pages;
 
 public partial class LoginRegisterPage : ContentPage
 {
-	public LoginRegisterPage()
-	{
-		InitializeComponent();
-	}
+    private readonly LoginRegisterViewModel _viewModel;
+
+    public LoginRegisterPage(LoginRegisterViewModel viewModel)
+    {
+        InitializeComponent();
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
+    }
+
 }
