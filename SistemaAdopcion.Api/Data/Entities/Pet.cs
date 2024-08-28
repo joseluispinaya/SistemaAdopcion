@@ -12,7 +12,7 @@ namespace SistemaAdopcion.Api.Data.Entities
         [Required, MaxLength(25)]
         public string Name { get; set; } = null!;
 
-        [Required, MaxLength(180)]
+        [Required, MaxLength(200)]
         public string Image { get; set; } = null!;
 
         [Required, MaxLength(50)]
