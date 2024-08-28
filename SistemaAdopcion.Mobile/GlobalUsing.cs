@@ -4,3 +4,5 @@ global using CommunityToolkit.Mvvm.Input;
 global using SistemaAdopcion.Mobile.Models;
 global using SistemaAdopcion.Mobile.Pages;
 global using SistemaAdopcion.Mobile.ViewModels;
+global using SisemaAdopcion.Shared.Dtos;
+global using SistemaAdopcion.Mobile.Services;

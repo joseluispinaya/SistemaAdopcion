@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SisemaAdopcion.Shared.Dtos;
 using SistemaAdopcion.Api.Services;
@@ -8,6 +9,7 @@ namespace SistemaAdopcion.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserPetService _userPetService;
