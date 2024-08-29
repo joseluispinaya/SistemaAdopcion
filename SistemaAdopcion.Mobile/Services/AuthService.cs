@@ -63,5 +63,20 @@ namespace SistemaAdopcion.Mobile.Services
         }
 
         private void SetUser(LoggedInUser user) => Preferences.Default.Set(UIConstants.UserInfo, user.ToJson());
+
+        public void Logout()
+        {
+            _commonService.SetToken(null);
+            Preferences.Default.Remove(UIConstants.UserInfo);
+            //_commonService.ToggleLoginStatus();
+        }
+
+        public LoggedInUser GetUser()
+        {
+            var userJson = Preferences.Default.Get(UIConstants.UserInfo, string.Empty);
+            return LoggedInUser.LoadFromJson(userJson)!;
+        }
+
+        public bool IsLoggedIn => Preferences.Default.ContainsKey(UIConstants.UserInfo);
     }
 }

@@ -13,5 +13,7 @@ namespace SisemaAdopcion.Shared.Dtos
         public string? Image { get; set; }
         public double Price { get; set; }
         public string? Breed { get; set; }
+
+        public string PrecioCad => $"Bs/ {Price:F2}";
     }
 }

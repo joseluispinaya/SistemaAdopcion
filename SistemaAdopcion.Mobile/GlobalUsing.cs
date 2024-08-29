@@ -6,3 +6,4 @@ global using SistemaAdopcion.Mobile.Pages;
 global using SistemaAdopcion.Mobile.ViewModels;
 global using SisemaAdopcion.Shared.Dtos;
 global using SistemaAdopcion.Mobile.Services;
+global using SisemaAdopcion.Shared.Enumerations;

@@ -85,14 +85,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Controls\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\SisemaAdopcion.Shared\SisemaAdopcion.Shared.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Controls\PetFeatControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\AdoptionsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
