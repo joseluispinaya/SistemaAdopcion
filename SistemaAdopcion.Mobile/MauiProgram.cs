@@ -40,7 +40,16 @@ namespace SistemaAdopcion.Mobile
             services.AddSingleton<HomeViewModel>()
                 .AddSingleton<HomePage>();
 
+            services.AddSingleton<AllPetsViewModel>()
+                .AddTransient<AllPetsPage>();
+
             services.AddTransientWithShellRoute<DetailsPage, DetailsViewModel>(nameof(DetailsPage));
+
+            services.AddTransient<ProfileViewModel>()
+                .AddTransient<ProfilePage>();
+
+            services.AddTransient<FavoritesViewModel>()
+                .AddTransient<FavoritesPage>();
         }
 
         static void ConfigureRefit(IServiceCollection services)

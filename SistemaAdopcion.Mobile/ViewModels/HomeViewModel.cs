@@ -10,9 +10,35 @@ namespace SistemaAdopcion.Mobile.ViewModels
     public partial class HomeViewModel : BaseViewModel
     {
         private readonly IPetsApi _petsApi;
-        public HomeViewModel(IPetsApi petsApi)
+        private readonly CommonService _commonService;
+        private readonly AuthService _authService;
+
+        public HomeViewModel(IPetsApi petsApi, CommonService commonService, AuthService authService)
         {
             _petsApi = petsApi;
+            _commonService = commonService;
+            _authService = authService;
+            _commonService.LoginStatusChanged += OnLoginStatusChanged;
+            SetUserInfo();
+        }
+
+        private void OnLoginStatusChanged(object? sender, EventArgs e)
+        {
+            SetUserInfo();
+        }
+
+        private void SetUserInfo()
+        {
+            if (_authService.IsLoggedIn)
+            {
+                var userInfo = _authService.GetUser();
+                UserName = userInfo.Name;
+                _commonService.SetToken(userInfo.Token);
+            }
+            else
+            {
+                UserName = "Desconocido";
+            }
         }
 
         [ObservableProperty]
@@ -25,7 +51,7 @@ namespace SistemaAdopcion.Mobile.ViewModels
         private IEnumerable<PetListDto> _random = Enumerable.Empty<PetListDto>();
 
         [ObservableProperty]
-        private string _userName = "Jose Luis";
+        private string _userName = "Desconocido";
 
         private bool _isInitialized;
         public async Task InitializeAsync()
@@ -57,9 +83,9 @@ namespace SistemaAdopcion.Mobile.ViewModels
             }
         }
 
-        [RelayCommand]
-        private async Task GoToDetailsPage(int petId) =>
-            await GoToAsync($"{nameof(DetailsPage)}?{nameof(DetailsViewModel.PetId)}={petId}");
+        //[RelayCommand]
+        //private async Task GoToDetailsPage(int petId) =>
+        //    await GoToAsync($"{nameof(DetailsPage)}?{nameof(DetailsViewModel.PetId)}={petId}");
 
     }
 }

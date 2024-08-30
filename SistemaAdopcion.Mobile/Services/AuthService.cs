@@ -56,7 +56,7 @@ namespace SistemaAdopcion.Mobile.Services
             SetUser(user);
 
             _commonService.SetToken(apiResponse.Data.Token);
-            //_commonService.ToggleLoginStatus();
+            _commonService.ToggleLoginStatus();
 
             return true;
 
@@ -68,7 +68,7 @@ namespace SistemaAdopcion.Mobile.Services
         {
             _commonService.SetToken(null);
             Preferences.Default.Remove(UIConstants.UserInfo);
-            //_commonService.ToggleLoginStatus();
+            _commonService.ToggleLoginStatus();
         }
 
         public LoggedInUser GetUser()

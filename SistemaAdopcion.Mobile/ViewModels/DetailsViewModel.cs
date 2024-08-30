@@ -10,16 +10,21 @@ namespace SistemaAdopcion.Mobile.ViewModels
     public partial class DetailsViewModel : BaseViewModel
     {
         private readonly IPetsApi _petsApi;
-        public DetailsViewModel(IPetsApi petsApi)
+        private readonly AuthService _authService;
+        private readonly IUserApi _userApi;
+
+        public DetailsViewModel(IPetsApi petsApi, AuthService authService, IUserApi userApi)
         {
             _petsApi = petsApi;
+            _authService = authService;
+            _userApi = userApi;
         }
 
         [ObservableProperty]
         private int _petId;
 
         [ObservableProperty]
-        private PetDetailDto _petDetail = new();
+        private Pet _petDetail = new();
 
         async partial void OnPetIdChanging(int value)
         {
@@ -27,10 +32,35 @@ namespace SistemaAdopcion.Mobile.ViewModels
 
             try
             {
-                var apiResponse = await _petsApi.GetPetDetailsAsync(value);
+                await Task.Delay(100);
+
+                var apiResponse = _authService.IsLoggedIn
+                              ? await _userApi.GetPetDetailsAsync(value)
+                              : await _petsApi.GetPetDetailsAsync(value);
+
+                //var apiResponse = await _petsApi.GetPetDetailsAsync(value);
                 if (apiResponse.IsSuccess)
                 {
-                    PetDetail = apiResponse.Data;
+                    //var petDto = apiResponse.Data;
+                    //PetDetail = apiResponse.Data;
+                    //public string PrecioCad => $"Bs/ {petDto.Price:F2}";
+                    var petDto = apiResponse.Data;
+                    PetDetail = new Pet
+                    {
+                        AdoptionStatus = petDto.AdoptionStatus,
+                        Age = petDto.Age,
+                        Breed = petDto.Breed,
+                        Description = petDto.Description,
+                        GenderDisplay = petDto.GenderDisplay,
+                        GenderImage = petDto.GenderImage,
+                        Id = petDto.Id,
+                        Image = petDto.Image,
+                        IsFavorite = petDto.IsFavorite,
+                        Name = petDto.Name,
+                        Price = petDto.Price,
+                        PrecioCad = petDto.PrecioCad
+                    };
+
                 }
                 else
                 {
@@ -44,6 +74,36 @@ namespace SistemaAdopcion.Mobile.ViewModels
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
+        private async Task GoBack() => await GoToAsync("..");
+
+        [RelayCommand]
+        private async Task ToggleFavorite()
+        {
+            if (!_authService.IsLoggedIn)
+            {
+                await ShowToastAsync("Debes iniciar sesión para marcar esta mascota como favorita");
+                return;
+            }
+
+            PetDetail.IsFavorite = !PetDetail.IsFavorite;
+            try
+            {
+                IsBusy = true;
+                await _userApi.ToggleFavoritesAsync(PetId);
+                IsBusy = false;
+            }
+            catch (Exception ex)
+            {
+                IsBusy = false;
+
+                //Revert 
+                PetDetail.IsFavorite = !PetDetail.IsFavorite;
+
+                await ShowAlertAsync("Error al alternar el estado de favorito", ex.Message);
             }
         }
     }
