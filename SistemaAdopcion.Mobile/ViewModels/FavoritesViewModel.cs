@@ -25,7 +25,7 @@ namespace SistemaAdopcion.Mobile.ViewModels
         {
             if (!_authService.IsLoggedIn)
             {
-                await ShowToastAsync("You need be logged in to load your favorite pets");
+                await ShowToastAsync("iniciar sesión para ver tus mascotas favoritas");
                 return;
             }
 
@@ -47,12 +47,12 @@ namespace SistemaAdopcion.Mobile.ViewModels
                 }
                 else
                 {
-                    await ShowAlertAsync("Error in fetching pets", apiResponse.Message!);
+                    await ShowAlertAsync("Error al buscar mascotas", apiResponse.Message!);
                 }
             }
             catch (Exception ex)
             {
-                await ShowAlertAsync("Error in fetching pets", ex.Message);
+                await ShowAlertAsync("Error al buscar mascotas", ex.Message);
             }
             finally
             {

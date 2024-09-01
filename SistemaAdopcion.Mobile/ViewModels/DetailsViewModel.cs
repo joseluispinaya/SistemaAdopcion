@@ -106,5 +106,39 @@ namespace SistemaAdopcion.Mobile.ViewModels
                 await ShowAlertAsync("Error al alternar el estado de favorito", ex.Message);
             }
         }
+
+        [RelayCommand]
+        private async Task AdoptNowAsync()
+        {
+            if (!_authService.IsLoggedIn)
+            {
+                if (await ShowConfirmAsync("Sin sesion", "Inicia session para adoptar" + Environment.NewLine + "Deseas iniciar sesion?", "Yes", "No"))
+                {
+                    await GoToAsync($"//{nameof(LoginRegisterPage)}");
+                }
+                return;
+            }
+            IsBusy = true;
+
+            try
+            {
+                var apiResponse = await _userApi.AdoptPetAsync(PetId);
+                if (apiResponse.IsSuccess)
+                {
+                    PetDetail.AdoptionStatus = AdoptionStatus.Adopted;
+                    await GoToAsync(nameof(AdoptionSuccessPage));
+                }
+                else
+                {
+                    await ShowAlertAsync("Error en la adopción", apiResponse.Message!);
+                }
+                IsBusy = false;
+            }
+            catch (Exception ex)
+            {
+                await ShowAlertAsync("Error en la adopción", ex.Message);
+                IsBusy = false;
+            }
+        }
     }
 }

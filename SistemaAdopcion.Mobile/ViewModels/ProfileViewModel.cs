@@ -10,10 +10,12 @@ namespace SistemaAdopcion.Mobile.ViewModels
     {
         private readonly AuthService _authService;
         private readonly CommonService _commonService;
-        public ProfileViewModel(AuthService authService, CommonService commonService)
+        private readonly IUserApi _userApi;
+        public ProfileViewModel(AuthService authService, CommonService commonService, IUserApi userApi)
         {
             _authService = authService;
             _commonService = commonService;
+            _userApi = userApi;
             _commonService.LoginStatusChanged += OnLoginStatusChanged;
             SetUserInfo();
         }
@@ -69,6 +71,24 @@ namespace SistemaAdopcion.Mobile.ViewModels
                 // We pressed logout
                 _authService.Logout();
                 await GoToAsync($"//{nameof(HomePage)}");
+            }
+        }
+
+        [RelayCommand]
+        private async Task ChangePasswordAsync()
+        {
+            if (!_authService.IsLoggedIn)
+            {
+                await ShowToastAsync("Debe Iniciar sesión para cambiar su contraseña");
+                return;
+            }
+            var newPassword = await App.Current!.MainPage!.DisplayPromptAsync("Cambiar clave", "Cambiar clave", placeholder: "Ingrene nueva clave");
+            if (!string.IsNullOrWhiteSpace(newPassword))
+            {
+                IsBusy = true;
+                await _userApi.ChangePasswordAsync(new SingleValueDto<string>(newPassword));
+                IsBusy = false;
+                await ShowToastAsync("Clave cambiada exitosamente");
             }
         }
     }

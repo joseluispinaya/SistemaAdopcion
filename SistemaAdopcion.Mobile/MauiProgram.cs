@@ -50,12 +50,14 @@ namespace SistemaAdopcion.Mobile
 
             services.AddTransient<FavoritesViewModel>()
                 .AddTransient<FavoritesPage>();
+
+            services.AddTransientWithShellRoute<AdoptionsPage, MyAdoptionsViewModel>(nameof(AdoptionsPage));
         }
 
         static void ConfigureRefit(IServiceCollection services)
         {
             services.AddRefitClient<IAuthApi>()
-        .ConfigureHttpClient(SetHttpClient);
+                .ConfigureHttpClient(SetHttpClient);
 
             services.AddRefitClient<IPetsApi>()
                 .ConfigureHttpClient(SetHttpClient);

@@ -126,8 +126,27 @@
 
         <Button
             Grid.Row="3"
+            Command="{Binding AdoptNowCommand}"
             Style="{StaticResource btnPrimary}"
-            Text="Adoptar" />
+            Text="..."
+            IsEnabled="False">
+            <Button.Triggers>
+                <DataTrigger
+                    Binding="{Binding PetDetail.AdoptionStatus}"
+                    TargetType="Button"
+                    Value="Adopted">
+                    <Setter Property="Text" Value="Adopted" />
+                    <Setter Property="IsEnabled" Value="False" />
+                </DataTrigger>
+                <DataTrigger
+                    Binding="{Binding PetDetail.AdoptionStatus}"
+                    TargetType="Button"
+                    Value="Available">
+                    <Setter Property="Text" Value="Adop Now" />
+                    <Setter Property="IsEnabled" Value="True" />
+                </DataTrigger>
+            </Button.Triggers>
+        </Button>
 
         <ActivityIndicator
             Grid.RowSpan="4"
