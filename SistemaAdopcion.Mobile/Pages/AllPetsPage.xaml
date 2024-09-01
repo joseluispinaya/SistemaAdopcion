@@ -6,7 +6,7 @@
              xmlns:models="clr-namespace:SistemaAdopcion.Mobile.Models"
              xmlns:vm="clr-namespace:SistemaAdopcion.Mobile.ViewModels"
              x:Class="SistemaAdopcion.Mobile.Pages.AllPetsPage"
-             Title="All Pets"
+             Title="Todas Mascotas"
              x:DataType="vm:AllPetsViewModel">
     <Grid>
         <RefreshView

@@ -134,7 +134,7 @@
                         Command="{Binding SkipForNowCommand}"
                         HeightRequest="30"
                         HorizontalOptions="Center"
-                        Text="Skip for now" />
+                        Text="Saltar por ahora" />
 
                     <BoxView
                         Grid.Column="2"

@@ -51,7 +51,7 @@
             </Border>
         </FlexLayout>
 
-        <Border
+        <!--<Border
             Grid.Row="1"
             HeightRequest="300"
             HorizontalOptions="Center"
@@ -63,8 +63,19 @@
                 HeightRequest="300"
                 Source="{Binding PetDetail.Image}"
                 WidthRequest="300" />
-        </Border>
+        </Border>-->
+        <Frame Grid.Row="1"
+               HeightRequest="300"
+               WidthRequest="300"
+               CornerRadius="150"
+               IsClippedToBounds="True">
+            <Image
+                Aspect="AspectFill"
+                HeightRequest="300"
+                Source="{Binding PetDetail.Image}"
+                WidthRequest="300" />
 
+        </Frame>
         <Grid
             Grid.Row="2"
             ColumnDefinitions="*, *, *"

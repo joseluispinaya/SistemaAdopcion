@@ -12,7 +12,7 @@
         <ResourceDictionary>
             <DataTemplate x:Key="petsHorizontalListTemplate" x:DataType="dtos:PetListDto">
                 <VerticalStackLayout Spacing="2">
-                    <Border
+                    <!--<Border
                         HeightRequest="100"
                         StrokeShape="RoundRectangle 50"
                         StrokeThickness="0"
@@ -22,7 +22,21 @@
                             HeightRequest="100"
                             Source="{Binding Image}"
                             WidthRequest="100" />
-                    </Border>
+                    </Border>-->
+
+                    <Frame HeightRequest="100"
+                           WidthRequest="100"
+                           CornerRadius="50"
+                           IsClippedToBounds="True">
+                        <Image
+                            Aspect="AspectFill"
+                            HeightRequest="100"
+                            Source="{Binding Image}"
+                            WidthRequest="100" />
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=GoToDetailsPageCommand}" CommandParameter="{Binding Id}" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
                     <Label
                         FontSize="16"
                         HorizontalOptions="Center"
@@ -55,7 +69,7 @@
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=GoToDetailsPageCommand}" CommandParameter="{Binding Id}" />
                                 </Grid.GestureRecognizers>
-                                <Border
+                                <!--<Border
                                     Grid.Row="0"
                                     HeightRequest="250"
                                     StrokeShape="RoundRectangle 125"
@@ -67,7 +81,22 @@
                                         Source="{Binding Image}"
                                         WidthRequest="250" />
 
-                                </Border>
+                                </Border>-->
+                                <Frame HeightRequest="250"
+                                       WidthRequest="250"
+                                       CornerRadius="125"
+                                       Grid.Row="0"
+                                       IsClippedToBounds="True">
+                                    <Image
+                                        Aspect="AspectFill"
+                                        HeightRequest="250"
+                                        Source="{Binding Image}"
+                                        WidthRequest="250" />
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=GoToDetailsPageCommand}" CommandParameter="{Binding Id}" />
+
+                                    </Frame.GestureRecognizers>
+                                </Frame>
                                 <Label
                                     Grid.Row="1"
                                     FontAttributes="Bold"
