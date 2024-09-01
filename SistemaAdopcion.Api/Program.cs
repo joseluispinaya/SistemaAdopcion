@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using SisemaAdopcion.Shared;
 using SistemaAdopcion.Api.Data;
+using SistemaAdopcion.Api.Hubs;
 using SistemaAdopcion.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +30,7 @@ builder.Services.AddTransient<IAuthService, AuthService>()
                 .AddTransient<IPetService, PetService>()
                 .AddTransient<IUserPetService, UserPetService>();
 
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -47,6 +50,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<PetHub>(AppConstants.HubPattern);
+
 //https://localhost:7126/swagger/index.html
 
 //app.Run();
